@@ -1,58 +1,65 @@
-![Compact DokoDemo keymap](keymap-drawer/keymap-compact.png)
+![Disposition compacte du DokoDemo](keymap-drawer/keymap-compact.png)
 
-# Tolki's Configuration for DokoDemo
+# Configuration DokoDemo de Tolki
 
-This branch contains my DokoDemo firmware and keymap. It uses
-firmware-level Ergo‑L on a QWERTY host while retaining the default keymap's
-compact Selenium-inspired layers.
+Cette branche contient mon firmware et ma disposition pour le DokoDemo. Elle
+implémente Ergo‑L au niveau du firmware sur un système configuré en QWERTY, tout
+en conservant les couches compactes inspirées de Selenium de la disposition
+d'origine.
 
-Highlights:
+Points principaux :
 
-- bilateral home-row mods in Alt, Ctrl, GUI order;
-- Ergo‑L punctuation morphs and a One Dead Key layer for accented letters;
-- sticky Shift plus dual Backspace/Space NavNum thumb keys;
-- a shared navigation and numpad layer;
-- Selenium-style Symbols and Fn/Media layers; and
-- Caps Word, Escape, and Enter combos; and
-- a toggleable QWERTY gaming layer with dedicated left-thumb Space.
+- modificateurs bilatéraux sur la rangée de repos, dans l'ordre Alt, Ctrl, GUI ;
+- ponctuation Ergo‑L adaptée avec Shift et couche de touche morte unique pour
+  les lettres accentuées ;
+- Shift persistant et touches de pouce Retour arrière/Espace donnant accès à
+  NavNum ;
+- couche commune pour la navigation et le pavé numérique ;
+- couches Symboles et Fn/Médias inspirées de Selenium ;
+- combos pour Caps Word, Échap et Entrée ;
+- couche de jeu QWERTY activable, avec une touche Espace dédiée au pouce
+  gauche.
 
-[Download the SVG version](keymap-drawer/keymap-compact.svg).
+[Télécharger la version SVG](keymap-drawer/keymap-compact.svg).
 
-## Detailed keymap
+## Disposition détaillée
 
-![DokoDemo keymap](keymap-drawer/keymap.svg)
+![Disposition détaillée du DokoDemo](keymap-drawer/keymap.svg)
 
-## Building the keymap
+## Génération de la disposition
 
-Regenerate the parsed keymap and SVG with:
+Pour régénérer la disposition analysée et les fichiers SVG :
 
 ```sh
 make keymap
 ```
 
-This also creates `keymap-drawer/keymap-compact.svg`: one physical keyboard
-with color-coded values from every user-facing layer. Run `make keymap-compact`
-when you only need to refresh the shareable composite SVG.
+Cette commande crée également `keymap-drawer/keymap-compact.svg` : une vue du
+clavier physique regroupant, par couleur, les actions de toutes les couches
+utiles. Utilisez `make keymap-compact` pour actualiser uniquement ce SVG
+composite destiné au partage.
 
-Create the tracked 3840px PNG used above with:
+Pour créer le PNG de 3 840 px suivi par Git et affiché ci-dessus :
 
 ```sh
 make keymap-compact-png
 ```
 
-This optional export target requires `rsvg-convert` from librsvg. Override its
-path with `RSVG_CONVERT=/path/to/rsvg-convert` when needed.
+Cette exportation facultative nécessite `rsvg-convert`, fourni par librsvg. Si
+nécessaire, indiquez son chemin avec
+`RSVG_CONVERT=/chemin/vers/rsvg-convert`.
 
-This uses the globally installed `keymap` executable. Saving
-`keymap-drawer/keymap.yaml` in VS Code also redraws the SVG when the recommended
-Run on Save extension is installed.
+La génération utilise l'exécutable `keymap` installé globalement. Enregistrer
+`keymap-drawer/keymap.yaml` dans VS Code redessine également le SVG lorsque
+l'extension Run on Save recommandée est installée.
 
-Create a print-ready A4 PDF with:
+Pour créer un PDF A4 prêt à imprimer :
 
 ```sh
 make keymap-print
 ```
 
-The PDF is written to `keymap-drawer/keymap-print.pdf`. This target requires GNU
-Make, the global `keymap` executable, Python 3 with PyYAML, and Chromium. Set
-`CHROMIUM=/path/to/browser` if the executable has a different name.
+Le PDF est enregistré dans `keymap-drawer/keymap-print.pdf`. Cette cible
+nécessite GNU Make, l'exécutable global `keymap`, Python 3 avec PyYAML et
+Chromium. Si l'exécutable porte un autre nom, définissez
+`CHROMIUM=/chemin/vers/le/navigateur`.
