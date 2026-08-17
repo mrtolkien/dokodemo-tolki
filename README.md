@@ -1,6 +1,8 @@
-# ZMK Configuration for DokoDemo
+# Tolki's Configuration for DokoDemo
 
-This branch contains the personal DokoDemo firmware and keymap. It uses
+![Compact DokoDemo keymap](keymap-drawer/keymap-compact.png)
+
+This branch contains my DokoDemo firmware and keymap. It uses
 firmware-level Ergo‑L on a QWERTY host while retaining the default keymap's
 compact Selenium-inspired layers.
 
@@ -14,15 +16,13 @@ Highlights:
 - Caps Word, Escape, and Enter combos; and
 - a toggleable QWERTY gaming layer with dedicated left-thumb Space.
 
-## Compact keymap
-
-![Compact DokoDemo keymap](keymap-drawer/keymap-compact.png)
-
 [Download the SVG version](keymap-drawer/keymap-compact.svg).
 
 ## Detailed keymap
 
 ![DokoDemo keymap](keymap-drawer/keymap.svg)
+
+## Building the keymap
 
 Regenerate the parsed keymap and SVG with:
 
@@ -47,7 +47,7 @@ This uses the globally installed `keymap` executable. Saving
 `keymap-drawer/keymap.yaml` in VS Code also redraws the SVG when the recommended
 Run on Save extension is installed.
 
-Create a three-page, print-ready A4 PDF with:
+Create a print-ready A4 PDF with:
 
 ```sh
 make keymap-print
