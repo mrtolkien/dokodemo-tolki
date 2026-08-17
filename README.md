@@ -1,6 +1,6 @@
-# Tolki's Configuration for DokoDemo
-
 ![Compact DokoDemo keymap](keymap-drawer/keymap-compact.png)
+
+# Tolki's Configuration for DokoDemo
 
 This branch contains my DokoDemo firmware and keymap. It uses
 firmware-level Ergo‑L on a QWERTY host while retaining the default keymap's
