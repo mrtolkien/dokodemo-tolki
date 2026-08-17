@@ -78,7 +78,9 @@ def key_label(value: object) -> tuple[str, str]:
     return tap, hold
 
 
-def fitted_size(value: str, maximum: float, width: float, minimum: float = 9.2) -> float:
+def fitted_size(
+    value: str, maximum: float, width: float, minimum: float = 9.2
+) -> float:
     """Approximate a monospace fit without browser-dependent measurement."""
     if not value:
         return maximum
@@ -134,7 +136,9 @@ def draw_bluetooth(x: float, y: float, profile: str, css_class: str) -> str:
     profile_size = fitted_size(profile, 14, 44, 9)
     return (
         f'<use href="#bluetooth" x="{x + 3:g}" y="{y - 9:g}" width="9" height="18" class="{css_class}"/>'
-        + svg_text(x + 16, y + .5, profile, css_class, anchor="start", size=profile_size)
+        + svg_text(
+            x + 16, y + 0.5, profile, css_class, anchor="start", size=profile_size
+        )
     )
 
 
@@ -154,21 +158,34 @@ def fn_label_size(value: str, maximum: float) -> float:
     return fitted_size(value, maximum, 48, 8.8)
 
 
-def draw_key(position: dict, center: tuple[float, float, float], index: int, layers: dict[str, list]) -> str:
+def draw_key(
+    position: dict,
+    center: tuple[float, float, float],
+    index: int,
+    layers: dict[str, list],
+) -> str:
     cx, cy, rotation = center
     half = KEY_SIZE / 2
-    out = [f'<g transform="translate({cx:g} {cy:g}) rotate({rotation:g})" class="key key-{index}">']
-    out.append(f'<rect x="{-half:g}" y="{-half:g}" width="{KEY_SIZE}" height="{KEY_SIZE}" rx="10"/>')
+    out = [
+        f'<g transform="translate({cx:g} {cy:g}) rotate({rotation:g})" class="key key-{index}">'
+    ]
+    out.append(
+        f'<rect x="{-half:g}" y="{-half:g}" width="{KEY_SIZE}" height="{KEY_SIZE}" rx="10"/>'
+    )
 
     base_value = layers["Base"][index]
     base_tap, base_hold = key_label(base_value)
     base_type = str(base_value.get("type", "")) if isinstance(base_value, dict) else ""
     if "odk" in base_type.split():
-        out.append('<use href="#ergol-logo" x="-27" y="-36" width="54" height="54" class="ergol-logo"/>')
+        out.append(
+            '<use href="#ergol-logo" x="-21" y="-21" width="42" height="42" class="ergol-logo"/>'
+        )
         out.append(svg_text(0, 29, "TOUCHE MORTE", "dead-key-label", size=8.8))
         base_tap, base_hold = "", ""
     elif base_hold == "sticky":
-        out.append('<use href="#shift" x="-25" y="-39" width="50" height="50" class="sticky-shift-icon"/>')
+        out.append(
+            '<use href="#shift" x="-25" y="-39" width="50" height="50" class="sticky-shift-icon"/>'
+        )
         out.append(svg_text(0, 30, "MAJ. 1×", "sticky-shift-label", size=11.5))
         base_tap, base_hold = "", ""
     base_y = -14 if base_hold else 7
@@ -176,7 +193,11 @@ def draw_key(position: dict, center: tuple[float, float, float], index: int, lay
         icon, width, height = BASE_ICONS[base_tap]
         out.append(draw_base_icon(icon, width, height, base_y - 1))
     elif base_tap:
-        out.append(svg_text(0, base_y, base_tap, "base", size=fitted_size(base_tap, 30, 72, 14)))
+        out.append(
+            svg_text(
+                0, base_y, base_tap, "base", size=fitted_size(base_tap, 30, 72, 14)
+            )
+        )
     if base_hold:
         hold_label = HOLD_LABELS.get(base_hold, base_hold)
         badge_width = min(84, max(42, len(hold_label) * 7.8 + 17))
@@ -185,13 +206,25 @@ def draw_key(position: dict, center: tuple[float, float, float], index: int, lay
             badge_class += " nav-hold"
         elif base_hold == "#":
             badge_class += " symbol-hold"
-        out.append(f'<rect x="{-badge_width / 2:g}" y="6" width="{badge_width:g}" height="29" rx="14.5" class="{badge_class}"/>')
+        out.append(
+            f'<rect x="{-badge_width / 2:g}" y="6" width="{badge_width:g}" height="29" rx="14.5" class="{badge_class}"/>'
+        )
         if base_hold == "⌖":
-            out.append('<use href="#navpad" x="-10" y="11" width="20" height="20" class="navnum"/>')
+            out.append(
+                '<use href="#navpad" x="-10" y="11" width="20" height="20" class="navnum"/>'
+            )
         else:
             hold_class = "base-hold ctrl-hold" if base_hold == "⌃" else "base-hold"
             hold_y = 22.5 if base_hold == "⌃" else 21
-            out.append(svg_text(0, hold_y, hold_label, hold_class, size=fitted_size(hold_label, 19, badge_width - 10, 12)))
+            out.append(
+                svg_text(
+                    0,
+                    hold_y,
+                    hold_label,
+                    hold_class,
+                    size=fitted_size(hold_label, 19, badge_width - 10, 12),
+                )
+            )
 
     slots = {
         "tl": (-half + 9, -half + 17, "start"),
@@ -222,7 +255,9 @@ def draw_key(position: dict, center: tuple[float, float, float], index: int, lay
         if layer_name == "Fn" or hold == "fn":
             rendered = tap
         elif hold == "lock" and tap == "⌖":
-            out.append(f'<use href="#navpad" x="{x - 46:g}" y="{y - 8:g}" width="16" height="16" class="navnum"/>')
+            out.append(
+                f'<use href="#navpad" x="{x - 46:g}" y="{y - 8:g}" width="16" height="16" class="navnum"/>'
+            )
             out.append(svg_text(x, y, "lock", "navnum", anchor="end", size=12))
             continue
         elif hold == "lock":
@@ -231,7 +266,11 @@ def draw_key(position: dict, center: tuple[float, float, float], index: int, lay
             rendered = f"{tap}/{hold}" if hold else tap
         if rendered in {"·", "●"}:
             continue
-        label_class = f"{css_class} symbol-at" if layer_name == "Symbols" and rendered == "@" else css_class
+        label_class = (
+            f"{css_class} symbol-at"
+            if layer_name == "Symbols" and rendered == "@"
+            else css_class
+        )
         size = (
             fn_label_size(rendered, max_size)
             if layer_name == "Fn"
@@ -249,9 +288,22 @@ def draw_key(position: dict, center: tuple[float, float, float], index: int, lay
         )
 
     if isinstance(base_value, dict) and base_value.get("s"):
+        shifted = str(base_value["s"])
+        shifted_y = -38 if "odk" in base_type.split() else -29
+        out.append(
+            svg_text(
+                0,
+                shifted_y,
+                shifted,
+                "core-shift",
+                size=fitted_size(shifted, 18.5, 34, 11),
+            )
+        )
+
+    if isinstance(base_value, dict) and base_value.get("right"):
         slot, css_class, max_size = ACCENT_SLOT
         x, y, anchor = slots[slot]
-        accent = str(base_value["s"])
+        accent = str(base_value["right"])
         out.append(
             svg_text(
                 x,
@@ -264,7 +316,9 @@ def draw_key(position: dict, center: tuple[float, float, float], index: int, lay
         )
 
     if index in {20, 29}:
-        out.append('<rect x="-16" y="28" width="32" height="18" rx="9" class="caps-word-pill"/>')
+        out.append(
+            '<rect x="-16" y="28" width="32" height="18" rx="9" class="caps-word-pill"/>'
+        )
         out.append(svg_text(0, 37.5, "CW", "caps-word-pill-label", size=11.5))
 
     out.append("</g>")
@@ -273,9 +327,10 @@ def draw_key(position: dict, center: tuple[float, float, float], index: int, lay
 
 def mock_key(center_x: float, center_y: float) -> str:
     """A single key in the split explains every fixed legend position."""
-    return f'''<g class="mock-key" transform="translate({center_x:g} {center_y:g})">
+    return f"""<g class="mock-key" transform="translate({center_x:g} {center_y:g})">
 <rect x="-70" y="-66" width="140" height="132" rx="13" class="mock-cap"/>
 {svg_text(0, -12, "BASE", "mock-base", size=22)}
+{svg_text(0, -40, "⇧ MAJ.", "core-shift", size=14)}
 <rect x="-34" y="4" width="68" height="25" rx="12.5" class="hold-badge"/>
 {svg_text(0, 17, "MAINTIEN", "base-hold", size=10.5)}
 <g class="mock-pill symbols"><rect x="-130" y="-78" width="96" height="25" rx="12.5"/>{svg_text(-82, -65, "#  SYMBOLES", "", size=10.5)}</g>
@@ -283,7 +338,7 @@ def mock_key(center_x: float, center_y: float) -> str:
 <g class="mock-pill fn"><rect x="-101" y="53" width="66" height="25" rx="12.5"/>{svg_text(-68, 66, "fn", "", size=13)}</g>
 <g class="mock-pill accents"><rect x="35" y="53" width="96" height="25" rx="12.5"/><use href="#ergol-logo" x="45" y="56" width="20" height="20"/>{svg_text(70, 66, "ACCENTS", "", anchor="start", size=10.5)}</g>
 <g class="legend-anatomy">
-{svg_text(0, 92, "centre = frappe  ·  pastille = maintien", "legend-help", size=10.5)}
+{svg_text(0, 92, "haut = Maj.  ·  centre = frappe  ·  pastille = maintien", "legend-help", size=10.5)}
 </g>
 <g class="legend-icons">
 {svg_text(-100, 117, "◆", "legend-glyph", size=18)}
@@ -311,16 +366,16 @@ def mock_key(center_x: float, center_y: float) -> str:
 {svg_text(59, 238, "→ NAVNUM", "layer-destination navnum", size=12.5)}
 <text x="0" y="260" class="layer-hold-source fn-hold-line" text-anchor="middle" font-size="10.5"><tspan>2 POUCES INTÉRIEURS →</tspan><tspan dx="4" class="fn-destination">FN</tspan></text>
 </g>
-</g>'''
+</g>"""
 
 
 def sticky_callout(center: tuple[float, float, float]) -> str:
     """Keep the one-shot behavior explanation beside the physical key."""
     x, y, rotation = center
-    return f'''<g transform="translate({x:g} {y:g}) rotate({rotation:g})" class="sticky-callout">
+    return f"""<g transform="translate({x:g} {y:g}) rotate({rotation:g})" class="sticky-callout">
 {svg_text(0, 73, "Une frappe active", "", size=10.5)}
 {svg_text(0, 88, "la prochaine lettre", "", size=10.5)}
-</g>'''
+</g>"""
 
 
 def caps_word_callout(center: tuple[float, float, float]) -> str:
@@ -377,7 +432,7 @@ def adjacent_combo(
     return f'''<g class="combo-bridge {css_class}">
 <path d="M {start_x:g} {start_y:g} L {x:g} {y:g} L {end_x:g} {end_y:g}"/>
 <rect x="{x - width / 2:g}" y="{y - 14:g}" width="{width:g}" height="28" rx="14"/>
-{icon_svg}{svg_text(label_x, y + .5, label, "combo-label", size=label_size)}
+{icon_svg}{svg_text(label_x, y + 0.5, label, "combo-label", size=label_size)}
 </g>'''
 
 
@@ -412,10 +467,16 @@ def main() -> None:
     gaming_y = (centers[28][1] + centers[29][1]) / 2 + gaming_offset
     combo_lines = "\n".join(
         (
-            adjacent_combo(centers[21], centers[22], "⎋", "combo-default", width=38, label_size=21),
-            adjacent_combo(centers[27], centers[28], "↵", "combo-default", width=38, label_size=22),
+            adjacent_combo(
+                centers[21], centers[22], "⎋", "combo-default", width=38, label_size=21
+            ),
+            adjacent_combo(
+                centers[27], centers[28], "↵", "combo-default", width=38, label_size=22
+            ),
             icon_badge(gaming_x, gaming_y, "gamepad", "gaming-combo"),
-            adjacent_combo(centers[31], centers[32], "fn", "fn-combo", width=48, label_size=13),
+            adjacent_combo(
+                centers[31], centers[32], "fn", "fn-combo", width=48, label_size=13
+            ),
         )
     )
 
@@ -462,11 +523,12 @@ def main() -> None:
   .key rect {{ fill: #252c38; stroke: #526071; stroke-width: 1.6; }}
   text {{ dominant-baseline: middle; }}
   .base {{ fill: #f8fafc; font-weight: 700; }}
+  .core-shift {{ fill: #c084fc; font-family: system-ui,sans-serif; font-weight: 800; }}
   .base-icon, .layer-icon, defs symbol[id^="arrow"] path, defs symbol[id^="page"] path {{ fill: none; stroke: currentColor; stroke-width: 2.25; stroke-linecap: round; stroke-linejoin: round; }}
   .base-icon {{ color: #f8fafc; stroke-width: 2.5; }}
-  .sticky-shift-icon {{ fill: #f0abfc; color: #f0abfc; }}
-  .sticky-shift-label {{ fill: #f0abfc; font-family: system-ui,sans-serif; font-weight: 800; letter-spacing: 1.4px; }}
-  .dead-key-label {{ fill: #d8b4fe; font-family: system-ui,sans-serif; font-weight: 800; letter-spacing: 1.1px; }}
+  .sticky-shift-icon {{ fill: #c084fc; color: #c084fc; }}
+  .sticky-shift-label {{ fill: #c084fc; font-family: system-ui,sans-serif; font-weight: 800; letter-spacing: 1.4px; }}
+  .dead-key-label {{ fill: #fb7185; font-family: system-ui,sans-serif; font-weight: 800; letter-spacing: 1.1px; }}
   .key rect.hold-badge, .mock-key rect.hold-badge {{ fill: #111827; stroke: #94a3b8; stroke-width: 1.7; }}
   .key rect.hold-badge.nav-hold {{ stroke: #60a5fa; }}
   .key rect.hold-badge.symbol-hold {{ stroke: #fbbf24; }}
@@ -476,7 +538,7 @@ def main() -> None:
   .symbol-at {{ font-family: system-ui,sans-serif; font-weight: 750; }}
   .navnum {{ fill: #60a5fa; color: #60a5fa; font-weight: 750; }}
   .fn {{ fill: #86b99c; color: #86b99c; font-family: system-ui,sans-serif; font-weight: 650; opacity: .76; }}
-  .accents {{ fill: #c084fc; color: #c084fc; font-family: system-ui,sans-serif; font-weight: 750; }}
+  .accents {{ fill: #fb7185; color: #fb7185; font-family: system-ui,sans-serif; font-weight: 750; }}
   .gaming {{ fill: #a98ac2; color: #a98ac2; font-weight: 550; }}
   .title {{ font: 750 27px system-ui,sans-serif; letter-spacing: -.3px; }}
   .subtitle {{ font: 12px system-ui,sans-serif; fill: #9aa7b7; letter-spacing: .6px; }}
@@ -488,7 +550,7 @@ def main() -> None:
   .legend-help {{ fill: #aab5c3; font-family: system-ui,sans-serif; }}
   .legend-glyph {{ fill: #e2e8f0; font-family: system-ui,sans-serif; font-weight: 700; }}
   .legend-name {{ fill: #aab5c3; font-family: system-ui,sans-serif; font-weight: 700; letter-spacing: .7px; }}
-  .sticky-callout {{ fill: #d8a8df; font-family: system-ui,sans-serif; font-weight: 600; }}
+  .sticky-callout {{ fill: #c4b5fd; font-family: system-ui,sans-serif; font-weight: 600; }}
   .mock-key rect.combo-sample-pill {{ fill: #111827; stroke: #38bdf8; stroke-width: 2.2; stroke-linecap: round; stroke-dasharray: 1 6; }}
   .combo-help {{ fill: #b3bdc9; font-family: system-ui,sans-serif; font-weight: 600; }}
   .combo-word {{ fill: #dbe4ee; font-weight: 750; }}

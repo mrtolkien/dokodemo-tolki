@@ -60,7 +60,7 @@
             bindings = <
             &kp CARET  &kp LT     &kp GT     &kp DLLR   &kp PRCNT      &kp AT      &kp AMPS   &kp STAR   &kp SQT    &kp GRAVE
             &kp LBRC   &kp LPAR   &kp RPAR   &kp RBRC   &kp EQUAL      &kp BSLH    &kp PLUS   &kp MINUS  &kp FSLH   &kp DQT
-            &kp TILDE  &kp LBKT   &kp RBKT   &kp UNDER  &kp HASH       &kp PIPE    &kp EXCL   &kp SEMI   &kp COLON  &kp QMARK
+            &kp TILDE  &kp LBKT   &kp RBKT   &euro      &kp HASH       &kp PIPE    &kp EXCL   &kp SEMI   &kp COLON  &kp QMARK
                                              &trans     &trans             &trans       &trans
             >;
         };

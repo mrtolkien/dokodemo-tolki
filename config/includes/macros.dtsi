@@ -1,5 +1,11 @@
 / {
     macros {
+        euro: euro { // € (macOS US: Option+Shift+2)
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp RA(LS(N2))>;
+        };
+
         e_acute: e_acute { // é
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;

@@ -3,63 +3,79 @@ layout:
 layers:
   Base:
   - t: Q
-    s: â
+    right: â
+    type: accent-output
   - t: C
-    s: ç
+    right: ç
+    type: accent-output
   - t: O
-    s: œ
+    right: œ
+    type: accent-output
   - t: P
-    s: ô
+    right: ô
+    type: accent-output
   - t: W
   - t: J
   - t: M
   - t: D
-    s: _
+    right: _
+    type: accent-output
   - t: ◌
     h: sticky
-    right: '!'
-    s: ¨
-    type: odk
+    s: '!'
+    right: ¨
+    type: accent-output odk
   - t: Y
-    s: û
+    right: û
+    type: accent-output
   - t: A
-    s: à
+    right: à
+    type: accent-output
   - t: S
     h: ⌥
-    s: é
+    right: é
+    type: accent-output
   - t: E
     h: ⌃
-    s: è
+    right: è
+    type: accent-output
   - t: N
     h: ◆
-    s: ê
+    right: ê
+    type: accent-output
   - t: F
   - t: L
-    s: (
+    right: (
+    type: accent-output
   - t: R
     h: ◆
-    s: )
+    right: )
+    type: accent-output
   - t: T
     h: ⌃
-    s: î
+    right: î
+    type: accent-output
   - t: I
     h: ⌥
-    s: ï
+    right: ï
+    type: accent-output
   - t: U
-    s: ù
+    right: ù
+    type: accent-output
   - t: Z
-    s: æ
+    right: æ
+    type: accent-output
   - t: X
   - t: '-'
-    right: '?'
+    s: '?'
   - t: V
   - t: B
   - t: .
-    right: ':'
+    s: ':'
   - t: H
   - t: G
   - t: ','
-    right: ;
+    s: ;
   - t: K
   - t: ⇧
     h: sticky
@@ -69,8 +85,8 @@ layers:
     type: special trigger-nav
   - t: ⎵
     h: ⌖
-    s: ''''
-    type: special trigger-nav
+    right: ''''
+    type: accent-output special trigger-nav
   - t: ⇥
     h: '#'
     type: special trigger-symbols
@@ -98,7 +114,7 @@ layers:
   - '~'
   - '['
   - ']'
-  - _
+  - €
   - '#'
   - '|'
   - '!'
