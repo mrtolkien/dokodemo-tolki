@@ -38,9 +38,9 @@
         one_dead_key_layer {
             display-name = "Accents";
             bindings = <
-            &a_circ     &kp RA(C)   &kp LA(Q)   &o_circ    &trans       &trans    &trans    &kp UNDER  &kp LA(U)  &u_circ
+            &a_circ     &kp RA(C)   &kp RA(Q)   &o_circ    &trans       &trans    &trans    &kp UNDER  &kp RA(U)  &u_circ
             &a_grave    &e_acute    &e_grave    &e_circ    &trans       &kp LPAR  &kp RPAR  &i_circ    &i_trema   &u_grave
-            &kp LA(SQT) &trans      &trans      &trans     &trans       &trans    &trans    &trans     &trans     &trans
+            &kp RA(SQT) &trans      &trans      &trans     &trans       &trans    &trans    &trans     &trans     &trans
                                                    &trans     &trans       &kp APOS  &trans
             >;
         };
