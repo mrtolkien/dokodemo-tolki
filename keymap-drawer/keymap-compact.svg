@@ -367,7 +367,7 @@
 <use href="#space" x="-22" y="-29" width="44" height="28" class="base base-icon"/>
 <rect x="-21" y="6" width="42" height="29" rx="14.5" class="hold-badge nav-hold"/>
 <use href="#navpad" x="-10" y="11" width="20" height="20" class="navnum"/>
-<text x="45" y="-37" class="navnum" text-anchor="end" font-size="22.5">⇧⎵</text>
+<text x="45" y="-37" class="navnum" text-anchor="end" font-size="16.3934">⌃⌥◆⇧⎵</text>
 <text x="-45" y="43" class="fn" text-anchor="start" font-size="14.5">Reset</text>
 <text x="45" y="43" class="accents" text-anchor="end" font-size="17.5">&#x27;</text>
 </g>

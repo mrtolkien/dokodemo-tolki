@@ -86,10 +86,6 @@ def format_yaml(path: Path) -> None:
             if trigger_type and not structural_types.intersection({"held", "trans"}):
                 add_type(key, trigger_type)
 
-    # NumLock is a persistent helper for NavNum, not a separate conceptual
-    # layer users need in the primary diagram.
-    layers.pop("NumLock", None)
-
     ordered_layers = {}
     for name in ("Base", "Symbols", "NavNum", "Fn", "Gaming"):
         if name in layers:

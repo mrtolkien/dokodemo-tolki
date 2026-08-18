@@ -174,9 +174,9 @@ layers:
   - t: ⌦
     h: fn
     type: held special fn-label
-  - t: ⇧⎵
+  - t: ⌃⌥◆⇧⎵
     h: fn
-    type: special fn-label trigger-fn
+    type: fn-label trigger-fn
   - t: ▽
     type: trans
   Fn:

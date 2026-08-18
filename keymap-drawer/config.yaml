@@ -120,12 +120,11 @@ parse_config:
     "&u_circ": û
     "&u_grave": ù
     "&kp RA(C)": ç
-    "&kp LA(Q)": œ
-    "&kp LA(U)": ¨
-    "&kp LA(SQT)": æ
+    "&kp RA(Q)": œ
+    "&kp RA(U)": ¨
+    "&kp RA(SQT)": æ
   layer_legend_map:
     Accents: "◌"
-    NumLock: "⌖ Lock"
     NavNum: "⌖"
     Symbols: "#"
     Fn: "fn"
@@ -141,6 +140,8 @@ parse_config:
     right_gui: "◆"
     keycode_combiner: "{mods}{key}"
     mod_combiner: "{mod_1}{mod_2}"
+    special_combinations:
+      "left_ctrl+left_alt+left_gui+left_shift": "⌃⌥◆⇧"
   zmk_keycode_map:
     EXCLAMATION: "!"
     EXCL: "!"
