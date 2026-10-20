@@ -19,6 +19,52 @@ HEADER_H = 72
 SPLIT_GAP = 280
 CANVAS_H = 670
 
+PRINT_STYLE = """
+  /* White-paper palette: low ink coverage, strong text contrast, no shadows. */
+  svg { fill: #172033; background: #ffffff; color-scheme: light; }
+  .background { fill: #ffffff; }
+  .key { filter: none; }
+  .key rect { fill: #fbfcfe; stroke: #687386; stroke-width: 1.8; }
+  .base, .mock-base { fill: #172033; }
+  .base-icon { fill: none; color: #172033; }
+  .core-shift, .sticky-shift-icon, .sticky-shift-label { fill: #7046a3; color: #7046a3; }
+  .dead-key-label, .accents { fill: #a9234d; color: #a9234d; }
+  .symbols { fill: #8a5700; color: #8a5700; }
+  .navnum { fill: #075b9c; color: #075b9c; }
+  .fn { fill: #38684a; color: #38684a; opacity: 1; }
+  .gaming { fill: #684b7a; color: #684b7a; }
+  .key rect.hold-badge, .mock-key rect.hold-badge {
+    fill: #f1f4f8; stroke: #687386;
+  }
+  .key rect.hold-badge.nav-hold { fill: #edf6fc; stroke: #075b9c; }
+  .key rect.hold-badge.symbol-hold { fill: #fff7e6; stroke: #8a5700; }
+  .base-hold { fill: #172033; }
+  .subtitle, .legend-help, .legend-name, .layer-hold-source,
+  .caps-key-help, .combo-help, .gaming-copy { fill: #465166; }
+  .legend-glyph, .combo-word { fill: #172033; }
+  .sticky-callout { fill: #7046a3; }
+  .mock-cap { fill: #ffffff; stroke: #687386; filter: none; }
+  .mock-pill rect { fill: #ffffff; }
+  .mock-pill.fn, .mock-pill.gaming { opacity: 1; }
+  .mock-key rect.combo-sample-pill, .key rect.caps-word-pill {
+    fill: #ffffff; stroke: #0877a8;
+  }
+  .caps-word-pill-label { fill: #075b9c; }
+  .caps-word-callout { fill: #075b9c; }
+  .legend-divider { stroke: #aeb6c2; }
+  .legend-section-title { fill: #596579; }
+  .fn-destination, .fn-activation { fill: #38684a; }
+  .gaming-callout { color: #684b7a; }
+  .gaming-callout path { stroke: #684b7a; }
+  .gaming-title { fill: #684b7a; }
+  .combo-bridge rect { fill: #ffffff; }
+  .combo-default path, .combo-default rect { stroke: #0877a8; }
+  .gaming-combo path, .gaming-combo rect { stroke: #684b7a; }
+  .fn-combo path, .fn-combo rect { stroke: #38684a; }
+  .gaming-combo { color: #684b7a; }
+  .combo-label { fill: #172033; }
+"""
+
 LAYER_SLOTS = {
     "Symbols": ("tl", "symbols", 22.0),
     "NavNum": ("tr", "navnum", 22.5),
@@ -437,10 +483,16 @@ def adjacent_combo(
 
 
 def main() -> None:
-    if len(sys.argv) != 4:
-        raise SystemExit("usage: compact.py KEYMAP_YAML LAYOUT_JSON OUTPUT_SVG")
+    if len(sys.argv) not in (4, 5):
+        raise SystemExit(
+            "usage: compact.py KEYMAP_YAML LAYOUT_JSON OUTPUT_SVG [screen|print]"
+        )
 
-    keymap_path, layout_path, output_path = map(Path, sys.argv[1:])
+    keymap_path, layout_path, output_path = map(Path, sys.argv[1:4])
+    theme = sys.argv[4] if len(sys.argv) == 5 else "screen"
+    if theme not in ("screen", "print"):
+        raise ValueError(f"Unknown compact keymap theme: {theme}")
+    theme_style = PRINT_STYLE if theme == "print" else ""
     keymap = yaml.safe_load(keymap_path.read_text(encoding="utf-8"))
     layout_data = json.loads(layout_path.read_text(encoding="utf-8"))
     positions = layout_data["layouts"]["dokodemo"]["layout"]
@@ -578,7 +630,7 @@ def main() -> None:
   .fn-combo path, .fn-combo rect {{ stroke: #78a98a; }}
   .fn-combo path, .fn-combo rect {{ stroke-dasharray: none; }}
   .gaming-combo {{ color: #d8b4fe; }}
-  .combo-label {{ fill: #f8fafc; font-family: system-ui,sans-serif; font-weight: 750; letter-spacing: .15px; }}
+  .combo-label {{ fill: #f8fafc; font-family: system-ui,sans-serif; font-weight: 750; letter-spacing: .15px; }}{theme_style}
 </style>
 <rect class="background" width="100%" height="100%" rx="14"/>
 <text x="36" y="29" class="title">DokoDemo · Ergo-L</text>

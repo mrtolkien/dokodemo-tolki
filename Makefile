@@ -6,6 +6,9 @@ KEYMAP_SOURCE := config/dokodemo.keymap
 KEYMAP_YAML := keymap-drawer/keymap.yaml
 KEYMAP_SVG := keymap-drawer/keymap.svg
 KEYMAP_COMPACT_SVG := keymap-drawer/keymap-compact.svg
+KEYMAP_COMPACT_PRINT_SVG := keymap-drawer/keymap-compact-print.svg
+KEYMAP_COMPACT_PRINT_PDF := keymap-drawer/keymap-compact-print.pdf
+KEYMAP_COMPACT_PRINT_PNG := keymap-drawer/keymap-compact-print.png
 KEYMAP_COMPACT_PNG := keymap-drawer/keymap-compact.png
 KEYMAP_COMPACT_PNG_WIDTH ?= 3840
 KEYMAP_LAYERS := Base Accents Symbols NavNum Fn Gaming
@@ -14,7 +17,7 @@ KEYMAP_PRINT_PDF := keymap-drawer/keymap-print.pdf
 CHROMIUM ?= chromium
 RSVG_CONVERT ?= rsvg-convert
 
-.PHONY: keymap keymap-svg keymap-compact keymap-compact-svg keymap-compact-png keymap-print check-keymap-print-deps
+.PHONY: keymap keymap-svg keymap-compact keymap-compact-svg keymap-compact-print-svg keymap-compact-print keymap-compact-png keymap-print check-keymap-print-deps
 
 keymap:
 	$(KEYMAP_DRAWER) -c $(KEYMAP_CONFIG) parse -z $(KEYMAP_SOURCE) \
@@ -36,6 +39,19 @@ keymap-compact:
 
 keymap-compact-svg:
 	python3 $(KEYMAP_COMPACTER) $(KEYMAP_YAML) config/dokodemo.json $(KEYMAP_COMPACT_SVG)
+
+keymap-compact-print-svg:
+	python3 $(KEYMAP_COMPACTER) $(KEYMAP_YAML) config/dokodemo.json $(KEYMAP_COMPACT_PRINT_SVG) print
+
+keymap-compact-print: keymap-compact-print-svg
+	@command -v $(RSVG_CONVERT) >/dev/null || { echo "Missing rsvg-convert: install librsvg or set RSVG_CONVERT=/path/to/rsvg-convert."; exit 1; }
+	$(RSVG_CONVERT) -f pdf -b white \
+		--page-width 210mm --page-height 297mm \
+		--width 194mm --left 8mm --top 29.25mm \
+		-o $(KEYMAP_COMPACT_PRINT_PDF) $(KEYMAP_COMPACT_PRINT_SVG)
+	$(RSVG_CONVERT) -b white -w $(KEYMAP_COMPACT_PNG_WIDTH) \
+		-o $(KEYMAP_COMPACT_PRINT_PNG) $(KEYMAP_COMPACT_PRINT_SVG)
+	@echo "Created $(KEYMAP_COMPACT_PRINT_PDF) and $(KEYMAP_COMPACT_PRINT_PNG)"
 
 keymap-compact-png: keymap-compact-svg
 	@command -v $(RSVG_CONVERT) >/dev/null || { echo "Missing rsvg-convert: install librsvg or set RSVG_CONVERT=/path/to/rsvg-convert."; exit 1; }

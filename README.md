@@ -20,7 +20,11 @@ Points principaux :
 - couche de jeu QWERTY activable, avec une touche Espace dédiée au pouce
   gauche.
 
-[Télécharger la version SVG](keymap-drawer/keymap-compact.svg).
+[Télécharger la version SVG](keymap-drawer/keymap-compact.svg), la
+[version pour papier blanc](keymap-drawer/keymap-compact-print.svg), ou le
+[PDF A4 portrait prêt à imprimer et à plier](keymap-drawer/keymap-compact-print.pdf).
+Une [version PNG sur fond blanc](keymap-drawer/keymap-compact-print.png) est
+également disponible pour le partage.
 
 ## Disposition détaillée
 
@@ -38,6 +42,19 @@ Cette commande crée également `keymap-drawer/keymap-compact.svg` : une vue du
 clavier physique regroupant, par couleur, les actions de toutes les couches
 utiles. Utilisez `make keymap-compact` pour actualiser uniquement ce SVG
 composite destiné au partage.
+
+Pour générer la même vue avec un fond blanc, des aplats clairs et des couleurs
+à fort contraste, puis la placer sur une page A4 portrait :
+
+```sh
+make keymap-compact-print
+```
+
+Le PDF à une page est enregistré dans `keymap-drawer/keymap-compact-print.pdf`
+et le PNG de 3 840 px dans `keymap-drawer/keymap-compact-print.png`. La
+disposition tient entièrement dans la moitié supérieure du PDF au format A5
+paysage, afin qu'une pliure horizontale ne la traverse pas. Utilisez
+`make keymap-compact-print-svg` pour ne régénérer que le SVG source.
 
 Pour créer le PNG de 3 840 px suivi par Git et affiché ci-dessus :
 
